@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>soulja369 — Tools & Projects</title>
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --surface: #161616;
+    --border: #2a2a2a;
+    --border-hover: #404040;
+    --text-primary: #f0f0f0;
+    --text-secondary: #888;
+    --text-muted: #555;
+    --green: #1D9E75;
+    --green-bg: #0a2e22;
+    --green-text: #4ecba0;
+    --amber: #BA7517;
+    --amber-bg: #2a1e08;
+    --amber-text: #f0a94a;
+    --gray-bg: #1e1e1e;
+    --gray-text: #888;
+    --red: #c0392b;
+    --red-bg: #2a0e0e;
+    --red-text: #e07070;
+    --accent: #5b7fff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* Layout */
+  .container { max-width: 900px; margin: 0 auto; padding: 60px 24px 80px; }
+
+  /* Header */
+  .header { margin-bottom: 56px; }
+  .handle { font-size: 13px; color: var(--text-muted); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+  .tagline { font-size: 28px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.2; }
+  .tagline span { color: var(--text-secondary); font-weight: 400; }
+  .header-meta { margin-top: 16px; font-size: 13px; color: var(--text-secondary); }
+
+  /* Status bar */
+  .status-bar { display: flex; gap: 24px; margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .stat { display: flex; flex-direction: column; gap: 2px; }
+  .stat-val { font-size: 22px; font-weight: 600; color: var(--text-primary); }
+  .stat-lbl { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* Section */
+  .section { margin-bottom: 40px; }
+  .section-header { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+
+  /* Project card */
+  .project-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    margin-bottom: 8px;
+    transition: border-color 0.15s, background 0.15s;
+    cursor: default;
+  }
+  .project-card:hover { border-color: var(--border-hover); background: #1c1c1c; }
+  .project-card.has-link { cursor: pointer; }
+
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .dot-active { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .dot-planning { background: var(--amber); }
+  .dot-idea { background: #444; }
+
+  .card-body { flex: 1; min-width: 0; }
+  .card-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 3px; }
+  .card-name { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+  .card-desc { font-size: 12px; color: var(--text-secondary); }
+  .card-phase { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  .card-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+  /* Badges */
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 4px; border: 1px solid; font-weight: 500; white-space: nowrap; }
+  .badge-active { background: var(--green-bg); color: var(--green-text); border-color: #1a5a3a; }
+  .badge-planning { background: var(--amber-bg); color: var(--amber-text); border-color: #4a3010; }
+  .badge-idea { background: var(--gray-bg); color: var(--gray-text); border-color: var(--border); }
+  .badge-high { background: #1e0a0a; color: #e07070; border-color: #3a1515; }
+  .badge-medium { background: var(--gray-bg); color: #666; border-color: var(--border); }
+
+  /* Footer */
+  .footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); flex-wrap: wrap; gap: 8px; }
+  .footer a { color: var(--text-muted); transition: color 0.15s; }
+  .footer a:hover { color: var(--text-secondary); }
+
+  @media (max-width: 600px) {
+    .tagline { font-size: 22px; }
+    .card-right { display: none; }
+    .status-bar { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="handle">soulja369</div>
+    <div class="tagline">Tools, projects, <span>and things I'm building.</span></div>
+    <div class="header-meta">Infrastructure · Automation · Apps · Business</div>
+  </div>
+
+  <div class="status-bar">
+    <div class="stat"><div class="stat-val">2</div><div class="stat-lbl">Active</div></div>
+    <div class="stat"><div class="stat-val">1</div><div class="stat-lbl">In Progress</div></div>
+    <div class="stat"><div class="stat-val">3</div><div class="stat-lbl">Ideas</div></div>
+    <div class="stat"><div class="stat-val">6</div><div class="stat-lbl">Total Projects</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">Active</div>
+
+    <div class="project-card">
+      <div class="dot dot-active"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <span class="card-name">Claude-Project-Creation</span>
+        </div>
+        <div class="card-desc">Automated Claude-native project management system. Scaffold, lifecycle skills, context handoff.</div>
+        <div class="card-phase">Phase 2 — Lifecycle Management</div>
+      </div>
+      <div class="card-right">
+        <span class="badge badge-active">Active</span>
+        <span class="badge badge-high">High</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="dot dot-active"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <span class="card-name">Local-Whisper-Claude-Pipeline</span>
+        </div>
+        <div class="card-desc">Fully local meeting transcription via Whisper on RTX 4090 + Claude API post-processing. Zero cloud audio exposure.</div>
+        <div class="card-phase">Operational — dual-channel capture running</div>
+      </div>
+      <div class="card-right">
+        <span class="badge badge-active">Active</span>
+        <span class="badge badge-medium">Medium</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">In Progress</div>
+
+    <div class="project-card">
+      <div class="dot dot-planning"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <span class="card-name">FamilyTask-App</span>
+        </div>
+        <div class="card-desc">Family chore and task system — web app, PWA, and Home Assistant dashboard embed. Kiosk-optimized for wall tablets.</div>
+        <div class="card-phase">Planning — MVP scope definition</div>
+      </div>
+      <div class="card-right">
+        <span class="badge badge-planning">Planning</span>
+        <span class="badge badge-medium">Medium</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">Ideas & Backlog</div>
+
+    <div class="project-card">
+      <div class="dot dot-idea"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <span class="card-name">RewardStack</span>
+        </div>
+        <div class="card-desc">Consumer app for managing loyalty and rewards programs — smart assistant that tells you how to use your points.</div>
+      </div>
+      <div class="card-right">
+        <span class="badge badge-idea">Idea</span>
+        <span class="badge badge-medium">Medium</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="dot dot-idea"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <span class="card-name">Training-Performance-System</span>
+        </div>
+        <div class="card-desc">Structured training and supplement tracking for two people. Modular programs, per-person logs, nutrition cross-referencing.</div>
+      </div>
+      <div class="card-right">
+        <span class="badge badge-idea">Idea</span>
+        <span class="badge badge-medium">Medium</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="dot dot-idea"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <span class="card-name">Fitness-Studio-Launch</span>
+        </div>
+        <div class="card-desc">Business concept — fitness studio launch and operations planning.</div>
+      </div>
+      <div class="card-right">
+        <span class="badge badge-idea">Idea</span>
+        <span class="badge badge-medium">Medium</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>soulja369.github.io</span>
+    <span>Updated June 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
